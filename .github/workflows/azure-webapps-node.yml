@@ -17,20 +17,54 @@
 # For more information on the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # For more samples to get started with GitHub Action workflows to deploy to Azure: https://github.com/Azure/actions-workflow-samples
 
+
+name: azure-webapp-node
+
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
+
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: your-app-name    # set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
-  NODE_VERSION: '14.x'                # set this to the node version to use
-
-permissions:
-  contents: read
+  subscriptionId: 33665a07-097d-48db-b1f9-dc30012e19d6
 
 jobs:
+  armDeployStaging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    env:
+      resource_group_name: rg-stg-ghost
+      location: westeurope
+      
+      AZURE_WEBAPP_NAME: furi102-ghost   # set this to your application's name
+      AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
+      NODE_VERSION: '14.x'                # set this to the node version to use
+    
+    environment:
+      name: staging
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy Resource Group ${{ env.resource_group_name }}
+        uses: Azure/arm-deploy@v1
+        with:
+          scope: subscription
+          subscriptionId: ${{ env.subscriptionId }}
+          region: "${{ env.location }}"
+          template: ./arm-templates/resourcegroup.json
+          parameters:
+            location="${{ env.location }}"
+            resourceGroupName=${{ env.resource_group_name }}
+          deploymentName: ${{ env.resource_group_name }}
+# ab here my own config
   build:
     runs-on: ubuntu-latest
     steps:
@@ -47,6 +81,8 @@ jobs:
         npm install
         npm run build --if-present
         npm run test --if-present
+        npm install yarn
+        
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3
@@ -73,6 +109,8 @@ jobs:
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+          scope: resourcegroup
+          resourceGroupName: ${{ env.resource_group_name }}
+          subscriptionId: ${{ env.subscriptionId }}
+          template: ./package.json
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
