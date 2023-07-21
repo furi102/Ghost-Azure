@@ -114,3 +114,4 @@ jobs:
           subscriptionId: ${{ env.subscriptionId }}
           template: ./package.json
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
+#
