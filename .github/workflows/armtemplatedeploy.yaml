@@ -40,32 +40,6 @@ jobs:
             resourceGroupName=${{ env.resource_group_name }}
           deploymentName: ${{ env.resource_group_name }}
 
-      - name: Deploy Storage Account
-        uses: Azure/arm-deploy@v1
-        id: storageAccountDeploy
-        with:
-          scope: resourcegroup
-          resourceGroupName: ${{ env.resource_group_name }}
-          subscriptionId: ${{ env.subscriptionId }}
-          template: ./arm-templates/storageaccount.json
-          parameters: 
-            sku=Standard_LRS
-            storageAccountName=afuglobostg002
-            location="${{ env.location }}"
-          deploymentMode: incremental
-
-      - name: Deploy Virtual machine
-        uses: Azure/arm-deploy@v1
-        with:
-          scope: resourcegroup
-          resourceGroupName: ${{ env.resource_group_name }}
-          subscriptionId: ${{ env.subscriptionId }}
-          template: ./arm-templates/virtualmachine.json
-          parameters: 
-            adminPassword=${{ secrets.UBUNTU_ADMIN_PASSWORD }}
-            location="${{ env.location }}"
-          deploymentMode: incremental
-
   build:
     runs-on: ubuntu-latest
         
