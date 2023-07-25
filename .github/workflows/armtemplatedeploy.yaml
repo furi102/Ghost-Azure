@@ -40,7 +40,7 @@ jobs:
             resourceGroupName=${{ env.resource_group_name }}
           deploymentName: ${{ env.resource_group_name }}
 
-  armDeployProduction:
+  armDeployWebPython:
     name: Deploy Web
     runs-on: ubuntu-latest
     
