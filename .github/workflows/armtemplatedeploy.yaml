@@ -40,9 +40,15 @@ jobs:
             resourceGroupName=${{ env.resource_group_name }}
           deploymentName: ${{ env.resource_group_name }}
 
-  build:
+  armDeployProduction:
+    name: Deploy Web
     runs-on: ubuntu-latest
         
+  build:
+    name: Deploy Web with Python
+    runs-on: ubuntu-latest    
+
+    needs: armDeployStaging
     steps:
       - uses: actions/checkout@v2
         
@@ -65,7 +71,6 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
