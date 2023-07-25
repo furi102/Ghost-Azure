@@ -41,15 +41,11 @@ jobs:
           deploymentName: ${{ env.resource_group_name }}
 
   armDeployWebPython:
-    name: Deploy Web
-    runs-on: ubuntu-latest
-    
-  build:
-    name: Deploy Web with Python
-    runs-on: ubuntu-latest    
+      runs-on: ubuntu-latest
 
-    needs: armDeployStaging      
-    steps:
+      needs: armDeployStaging  
+
+      steps:  
       - uses: actions/checkout@v3
 
       - name: Set up Python version
