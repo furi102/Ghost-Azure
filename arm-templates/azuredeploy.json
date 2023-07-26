@@ -70,7 +70,11 @@
         "defaultValue": ""
       },
       "repoUrl": {
-        "type": "string"
+        "type": "string",
+        "metadata": {
+            "description": "Repo Url"
+        },
+        "defaultValue": "https://github.com/furi102/Ghost-Azure"
       },
       "branch": {
         "type": "string",
