@@ -15,7 +15,7 @@ jobs:
     name: Deploy to Staging
     runs-on: ubuntu-latest
     env:
-      resource_group_name: rg-stg-githubactions
+      resource_group_name: rg-stg-ghost
       location: westeurope
       PYTHON_VERSION: 3.8
     environment:
