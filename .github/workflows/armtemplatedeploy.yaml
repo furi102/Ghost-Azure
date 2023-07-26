@@ -46,4 +46,4 @@ jobs:
         with:
           subscriptionId: ${{ env.subscriptionId }}
           resourceGroupName: ${{ env.resource_group_name }}
-          templates: /arm-templates/deployazure.json
+          templates: ./arm-templates/deployazure.json
