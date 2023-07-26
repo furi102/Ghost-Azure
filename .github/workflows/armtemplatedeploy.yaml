@@ -41,44 +41,9 @@ jobs:
             resourceGroupName=${{ env.resource_group_name }}
           deploymentName: ${{ env.resource_group_name }}
 
-  armDeployWebPython:
-      runs-on: ubuntu-latest
-
-      needs: armDeployStaging  
-
-      steps:  
-      - uses: actions/checkout@v3
-
-      - name: Set up Python version
-        uses: actions/setup-python@v3.0.0
+      - name: Deploy azure App service
+        uses: azure/arm-deploy@v1
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          cache: 'pip'
-
-      - name: Create and start virtual environment
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-
-  deploy:
-    permissions:
-      contents: none
-    runs-on: ubuntu-latest
-    needs: armDeployWebPython
-    environment:
-      name: 'Development'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v3
-        with:
-          name: python-app
-          path: tester.py
-
-      - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          subscriptionId: ${{ env.subscriptionId }}
+          resourceGroupName: ${{ env.resource_group_name }}
+          templates: /arm-templates/deployazure.json
