@@ -32,7 +32,7 @@
           "Standard",
           "Premium"
         ],
-        "defaultValue": "Free"
+        "defaultValue": "Standard"
       },
       "Worker Size": {
         "type": "string",
