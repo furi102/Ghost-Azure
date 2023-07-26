@@ -40,7 +40,7 @@ jobs:
             location="${{ env.location }}"
             resourceGroupName=${{ env.resource_group_name }}
           deploymentName: ${{ env.resource_group_name }}
-          deploymentMode: complete
+          
 
       - name: Deploy azure App service
         uses: azure/arm-deploy@v1
@@ -48,7 +48,7 @@ jobs:
           subscriptionId: ${{ env.subscriptionId }}
           resourceGroupName: ${{ env.resource_group_name }}
           template: ./arm-templates/stg-azuredeploy.json
-        
+          deploymentMode: complete
 
   armDeploy:
     name: Deploy to Production
@@ -81,7 +81,7 @@ jobs:
             location="${{ env.location }}"
             resourceGroupName=${{ env.resource_group_name }}
           deploymentName: ${{ env.resource_group_name }}
-          deploymentMode: complete
+          
 
       - name: Deploy azure App service
         uses: azure/arm-deploy@v1
@@ -89,5 +89,6 @@ jobs:
           subscriptionId: ${{ env.subscriptionId }}
           resourceGroupName: ${{ env.resource_group_name }}
           template: ./arm-templates/prd-azuredeploy.json
+          deploymentMode: complete
 
 
