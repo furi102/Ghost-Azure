@@ -17,6 +17,7 @@ jobs:
     env:
       resource_group_name: rg-stg-githubactions
       location: westeurope
+      PYTHON_VERSION: 3.8
     environment:
       name: staging
 
