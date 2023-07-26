@@ -40,6 +40,7 @@ jobs:
             location="${{ env.location }}"
             resourceGroupName=${{ env.resource_group_name }}
           deploymentName: ${{ env.resource_group_name }}
+          deploymentMode: incremental
 
       - name: Deploy azure App service
         uses: azure/arm-deploy@v1
@@ -47,5 +48,5 @@ jobs:
           subscriptionId: ${{ env.subscriptionId }}
           resourceGroupName: ${{ env.resource_group_name }}
           template: ./arm-templates/azuredeploy.json
-
+        
 
