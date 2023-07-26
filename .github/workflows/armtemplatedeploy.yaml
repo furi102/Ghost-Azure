@@ -47,7 +47,7 @@ jobs:
         with:
           subscriptionId: ${{ env.subscriptionId }}
           resourceGroupName: ${{ env.resource_group_name }}
-          template: ./arm-templates/azuredeploy.json
+          template: ./arm-templates/stg-azuredeploy.json
         
 
   armDeploy:
