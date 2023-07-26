@@ -1,0 +1,47 @@
+{
+    "location": "West Europe",
+    "tags": {},
+    "properties": {
+        "name": "furi102-stg-plan-autoscale-102",
+        "enabled": true,
+        "targetResourceUri": "/subscriptions/33665a07-097d-48db-b1f9-dc30012e19d6/resourceGroups/rg-stg-ghost/providers/Microsoft.Web/serverfarms/furi102-stg-plan",
+        "profiles": [
+            {
+                "name": "Auto created default scale condition",
+                "capacity": {
+                    "minimum": "1",
+                    "maximum": "4",
+                    "default": "1"
+                },
+                "rules": [
+                    {
+                        "scaleAction": {
+                            "direction": "Increase",
+                            "type": "ChangeCount",
+                            "value": "1",
+                            "cooldown": "PT5M"
+                        },
+                        "metricTrigger": {
+                            "metricName": "CpuPercentage",
+                            "metricNamespace": "microsoft.web/serverfarms",
+                            "metricResourceUri": "/subscriptions/33665a07-097d-48db-b1f9-dc30012e19d6/resourceGroups/rg-stg-ghost/providers/Microsoft.Web/serverFarms/furi102-stg-plan",
+                            "operator": "GreaterThan",
+                            "statistic": "Average",
+                            "threshold": 80,
+                            "timeAggregation": "Average",
+                            "timeGrain": "PT1M",
+                            "timeWindow": "PT10M",
+                            "Dimensions": [],
+                            "dividePerInstance": false
+                        }
+                    }
+                ]
+            }
+        ],
+        "notifications": [],
+        "targetResourceLocation": "West Europe"
+    },
+    "id": "/subscriptions/33665a07-097d-48db-b1f9-dc30012e19d6/resourceGroups/rg-stg-ghost/providers/microsoft.insights/autoscalesettings/furi102-stg-plan-autoscale-102",
+    "name": "furi102-stg-plan-autoscale-102",
+    "type": "Microsoft.Insights/autoscaleSettings"
+}
