@@ -3,13 +3,25 @@
     "contentVersion": "1.0.0.2",
     "parameters": {
       "siteName": {
-        "type": "string"
-      },
+        "type": "string",
+        "metadata": {
+            "description": "Enter the site name"
+        },
+        "defaultValue": "furi10222"
+    },
       "hostingPlanName": {
-        "type": "string"
+        "type": "string",
+        "metadata": {
+            "description": "Enter the name of AppPlan"
+        },
+        "defaultValue": "furi102-plan"
       },
       "siteLocation": {
-        "type": "string"
+        "type": "string",
+        "metadata": {
+            "description": "Enter the site Location"
+        },
+        "defaultValue": "westeurope"
       },
       "sku": {
         "type": "string",
@@ -61,7 +73,11 @@
         "type": "string"
       },
       "branch": {
-        "type": "string"
+        "type": "string",
+        "metadata": {
+            "description": "Enter the branch name"
+        },
+        "defaultValue": "main"
       }
     },
     "variables": {

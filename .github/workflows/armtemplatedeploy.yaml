@@ -47,12 +47,5 @@ jobs:
           subscriptionId: ${{ env.subscriptionId }}
           resourceGroupName: ${{ env.resource_group_name }}
           template: ./arm-templates/azuredeploy.json
-          parameters: 
-            hostingPlanName = ${{ hostingPlanName }}
-            repoUrl = "https://github.com/furi102/Ghost-Azure"
-            branch = main
-            sitenName = furi102-site
-            siteLocation = westeurope
-
 
 
