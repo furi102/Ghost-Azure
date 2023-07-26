@@ -7,14 +7,14 @@
         "metadata": {
             "description": "Enter the site name"
         },
-        "defaultValue": "furi10222"
+        "defaultValue": "furi102-prd"
     },
       "hostingPlanName": {
         "type": "string",
         "metadata": {
             "description": "Enter the name of AppPlan"
         },
-        "defaultValue": "furi102-plan"
+        "defaultValue": "furi102-plan-prd"
       },
       "siteLocation": {
         "type": "string",

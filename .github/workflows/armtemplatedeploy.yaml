@@ -51,7 +51,7 @@ jobs:
         
 
   armDeploy:
-    name: Deploy to Staging
+    name: Deploy to Production
     runs-on: ubuntu-latest
     env:
       resource_group_name: rg-prd-ghost
