@@ -118,7 +118,11 @@
         },
         "properties": {
           "name": "[parameters('siteName')]",
-          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]"
+          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
+            "clientAffinityEnabled": false,
+            "virtualNetworkSubnetId": null,
+            "httpsOnly": true,
+            "publicNetworkAccess": "Enabled"
         },
         "resources": [
           {
