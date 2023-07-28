@@ -9,6 +9,8 @@ on:
 
 env:
   subscriptionId: 33665a07-097d-48db-b1f9-dc30012e19d6
+  AZURE_WEBAPP_NAME: "furi102-stg"   # Replace this with your Azure App Service name
+  AZURE_WEBAPP_PACKAGE_PATH: '.'   # Replace this with the path to your Node.js app files, if it's not at the root of the repository
 
 jobs:
   armDeployStaging:
@@ -49,7 +51,29 @@ jobs:
           resourceGroupName: ${{ env.resource_group_name }}
           template: ./arm-templates/stg-azuredeploy.json
           deploymentMode: complete
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    needs: armDeployStaging
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'   # Change this to the Node.js version your app requires
 
+      - name: Install dependencies
+        run: npm install ghost-cli@latest -g
+
+      - name: Build app
+        run: ghost install local  # If your app requires a build step, otherwise remove this line
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
   armDeploy:
     name: Deploy to Production
     runs-on: ubuntu-latest
