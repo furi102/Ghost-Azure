@@ -57,7 +57,7 @@ jobs:
   
   build-and-deploy:
     runs-on: ubuntu-latest
-
+    needs: armDeployStaging
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
