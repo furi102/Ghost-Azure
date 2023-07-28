@@ -66,9 +66,6 @@ jobs:
       - name: Install dependencies
         run: npm install ghost-cli@latest -g
 
-      - name: Build app
-        run: ghost install local  # If your app requires a build step, otherwise remove this line
-
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
