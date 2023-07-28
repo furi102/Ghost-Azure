@@ -57,7 +57,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      
+        
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
