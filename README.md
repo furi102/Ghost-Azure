@@ -1,103 +1,101 @@
 &nbsp;
-<p align="center">
-  <a href="https://ghost.org/#gh-light-mode-only" target="_blank">
-    <img src="https://user-images.githubusercontent.com/65487235/157884383-1b75feb1-45d8-4430-b636-3f7e06577347.png" alt="Ghost" width="200px">
-  </a>
-  <a href="https://ghost.org/#gh-dark-mode-only" target="_blank">
-    <img src="https://user-images.githubusercontent.com/65487235/157849205-aa24152c-4610-4d7d-b752-3a8c4f9319e6.png" alt="Ghost" width="200px">
-  </a>
-</p>
-&nbsp;
+# Solution Architecture for Ghost Blog Platform on Microsoft Azure
 
-<p align="center">
-    <a href="https://ghost.org/">Ghost.org</a> •
-    <a href="https://forum.ghost.org">Forum</a> •
-    <a href="https://ghost.org/docs/">Docs</a> •
-    <a href="https://github.com/TryGhost/Ghost/blob/main/.github/CONTRIBUTING.md">Contributing</a> •
-    <a href="https://twitter.com/ghost">Twitter</a>
-    <br /><br />
-    <a href="https://ghost.org/">
-        <img src="https://img.shields.io/badge/downloads-3M-brightgreen.svg" alt="Downloads" />
-    </a>
-    <a href="https://github.com/TryGhost/Ghost/releases/">
-        <img src="https://img.shields.io/github/release/TryGhost/Ghost.svg" alt="Latest release" />
-    </a>
-    <a href="https://github.com/TryGhost/Ghost/actions">
-        <img src="https://github.com/TryGhost/Ghost/workflows/CI/badge.svg?branch=main" alt="Build status" />
-    </a>
-    <a href="https://github.com/TryGhost/Ghost/contributors/">
-        <img src="https://img.shields.io/github/contributors/TryGhost/Ghost.svg" alt="Contributors" />
-    </a>
-</p>
-<p align="center">
-  Love open source? <a href="https://careers.ghost.org">We're hiring</a> JavaScript engineers to work on Ghost full-time.
-</p>
+![image](https://github.com/furi102/Ghost-Azure/assets/62565315/1917e815-529a-4506-b477-449a9031d03e)
 
-&nbsp;
 
-<a href="https://ghost.org/"><img src="https://user-images.githubusercontent.com/353959/169805900-66be5b89-0859-4816-8da9-528ed7534704.png" alt="Fiercely independent, professional publishing. Ghost is the most popular open source, headless Node.js CMS which already works with all the tools you know and love." /></a>
+## High-Level Architecture:
 
-&nbsp;
+- Use **Azure App Service Plan** with an autoscaling option to deploy and manage the Ghost Blog application in containers. Azure App Service provides scalability, easy deployment, and automated updates.
+- Set up an **Azure Database for PostgreSQL** to host the blog's database for content storage. Azure Database for PostgreSQL is a managed service that ensures high availability and scalability.
+- Store media and static assets in **Azure Blob Storage**. Blob Storage provides low-cost, scalable storage for the blog's media files.
+- Utilize **Azure Content Delivery Network (CDN)** to distribute static content globally and improve website performance.
+- Implement **Azure Front Door** for global load balancing and geographic failover support.
+- Use **Azure Monitor** for monitoring the application's performance and setting up alerts for autoscaling.
+- Implement **Azure Functions** for serverless functions, such as the ability to delete all posts at once.
 
-<a href="https://ghost.org/pricing/#gh-light-mode-only" target="_blank"><img src="https://user-images.githubusercontent.com/65487235/157849437-9b8fcc48-1920-4b26-a1e8-5806db0e6bb9.png" alt="Ghost(Pro)" width="165px" /></a>
-<a href="https://ghost.org/pricing/#gh-dark-mode-only" target="_blank"><img src="https://user-images.githubusercontent.com/65487235/157849438-79889b04-b7b6-4ba7-8de6-4c1e4b4e16a5.png" alt="Ghost(Pro)" width="165px" /></a>
+## Scalability and Traffic Handling:
 
-The easiest way to get a production instance deployed is with our official **[Ghost(Pro)](https://ghost.org/pricing/)** managed service. It takes about 2 minutes to launch a new site with worldwide CDN, backups, security and maintenance all done for you.
+- Use **Autoscaling** in Azure App Service to automatically adjust the number of instances based on traffic or other metrics like CPU usage or web requests.
+- Implement **Azure Front Door** to load balance and distribute traffic across multiple instances of the Ghost Blog application.
+- Utilize **Azure CDN** to cache and serve static content, offloading traffic from the application servers during traffic spikes.
+- Use **Azure Database for PostgreSQL**'s scaling capabilities to handle traffic spikes.
 
-For most people this ends up being the best value option because of [how much time it saves](https://ghost.org/docs/hosting/) — and 100% of revenue goes to the Ghost Foundation; funding the maintenance and further development of the project itself. So you’ll be supporting open source software *and* getting a great service!
+## Disaster Recovery and High Availability:
 
-&nbsp;
+- Deploy the Ghost Blog application and database in multiple Azure regions for geographic redundancy and fault tolerance.
+- Set up database **geo-replication** for automatic failover in case of a region failure.
+- Use **Azure Backup** to regularly back up the blog's data and configuration for disaster recovery purposes.
 
-# Quickstart install
+## DevOps and Separated Environments:
 
-If you want to run your own instance of Ghost, in most cases the best way is to use our **CLI tool**
+- Use **Azure DevOps** to manage CI/CD pipelines for the Ghost Blog application.
+- Create separate AKS namespaces or clusters for development, testing, and production environments to support the DevOps teams' workflow.
 
-```
-npm install ghost-cli -g
-```
+## Operations and Visibility:
+
+- Utilize **Azure Monitor** to collect and analyze logs and metrics for the Ghost Blog application and infrastructure.
+- Implement **Azure Application Insights** for detailed performance monitoring and troubleshooting.
+- Use **Azure Log Analytics** for centralized log management and monitoring.
+
+## Security:
+
+- Implement **Azure Web Application Firewall (WAF)** to protect the Ghost Blog from web application attacks.
+- Utilize **Azure Security Center** and **Azure Sentinel** for centralized security monitoring and threat detection.
+- Set up **Azure Role-Based Access Control (RBAC)** to manage access to Azure resources.
+- Enable encryption at rest and in transit for sensitive data.
+
 
 &nbsp;
 
-Then, if installing locally add the `local` flag to get up and running in under a minute - [Local install docs](https://ghost.org/docs/install/local/)
+# Acceptance Criteria for the Implementation of the Ghost Blog Platform on Microsoft Azure
 
-```
-ghost install local
-```
+## Scalability:
 
-&nbsp;
+- [ ] The Ghost Blog application automatically scales the number of instances in Azure App Service based on traffic. 
+- [ ] Azure Database for PostgreSQL can handle increasing loads during traffic spikes without performance degradation.
+- [ ] Load balancing and distribution of traffic are smooth during high-traffic periods, and there are no bottlenecks affecting user experience.
 
-or on a server run the full install, including automatic SSL setup using LetsEncrypt - [Production install docs](https://ghost.org/docs/install/ubuntu/)
+## Security:
 
-```
-ghost install
-```
+- [ ] Azure Web Application Firewall (WAF) is implemented to protect the Ghost Blog application against common web application vulnerabilities.
+- [ ] Sensitive data, such as database credentials and access keys, are securely stored using Azure Key Vault or Azure Managed Identity.
+- [ ] Network Security Groups (NSGs) are configured appropriately to control traffic to the application and database, and there are no unauthorized access points.
 
-&nbsp;
+## Consistent Results:
 
-Check out our [official documentation](https://ghost.org/docs/) for more information about our [recommended hosting stack](https://ghost.org/docs/hosting/) & properly [upgrading Ghost](https://ghost.org/docs/update/), plus everything you need to develop your own Ghost [themes](https://ghost.org/docs/themes/) or work with [our API](https://ghost.org/docs/content-api/).
+- [ ] The Ghost Blog application consistently returns the same results for all users across different sessions and interactions.
+- [ ] Caching mechanisms, if used, provide consistent content to users without stale data or inconsistencies.
 
-### Contributors & advanced developers
+## Resiliency:
 
-For anyone wishing to contribute to Ghost or to hack/customize core files we recommend following our full development setup guides: [Contributor guide](https://ghost.org/docs/contributing/) • [Developer setup](https://ghost.org/docs/install/source/)
+- [ ] The Ghost Blog application is deployed across multiple Azure regions to ensure high availability and fault tolerance.
+- [ ] Azure Front Door is configured for geographic failover in case of a significant geographical failure, and failover testing is successful.
+- [ ] Azure Database for PostgreSQL has geo-replication enabled, and disaster recovery testing ensures data integrity and recovery.
 
-&nbsp;
+## Observability:
 
-# Ghost sponsors
+- [ ] Azure Monitor and Azure Application Insights are implemented to monitor the application's performance, health, and logs.
+- [ ] Key metrics, such as response times, error rates, and resource utilization, are tracked and visualized in monitoring dashboards for easy observability.
+- [ ] Logging captures relevant information for debugging and troubleshooting, and log analysis tools provide valuable insights into application behavior.
 
-We'd like to extend big thanks to our sponsors and partners who make Ghost possible. If you're interested in sponsoring Ghost and supporting the project, please check out our profile on [GitHub sponsors](https://github.com/sponsors/TryGhost) :heart:
+## Automation:
 
-**[DigitalOcean](https://m.do.co/c/9ff29836d717)** • **[Fastly](https://www.fastly.com/)**
+- [ ] The deployment of the Ghost Blog application and environment is automated using Azure Resource Manager (ARM) templates or Infrastructure as Code (IaC) tools like Terraform.
+- [ ] CI/CD pipelines are set up using Azure DevOps or any other suitable CI/CD tools, allowing for seamless and frequent deployments without downtime.
 
-&nbsp;
+## Disaster Recovery Testing:
 
-# Getting help
+- [ ] Disaster recovery plans are documented, and periodic testing ensures data and service recovery in case of any unforeseen incidents. Recovery time objectives (RTO) and recovery point objectives (RPO) are met.
 
-You can find answers to a huge variety of questions, along with a large community of helpful developers over on the [Ghost forum](https://forum.ghost.org/) - replies are generally very quick. **Ghost(Pro)** customers also have access to 24/7 email support.
+## Load Testing:
 
-To stay up to date with all the latest news and product updates, make sure you [subscribe to our blog](https://ghost.org/blog/) — or you can always follow us [on Twitter](https://twitter.com/Ghost), if you prefer your updates bite-sized and facetious. :saxophone::turtle:
+- [ ] The application has undergone load testing, and the results demonstrate that it can handle traffic spikes up to four times the typical load without performance degradation.
 
-&nbsp;
+## Security Testing:
 
-# Copyright & license
+- [ ] Security assessments, such as vulnerability scanning and penetration testing, have been conducted to identify and remediate potential security flaws, ensuring a robust security posture.
 
-Copyright (c) 2013-2023 Ghost Foundation - Released under the [MIT license](LICENSE). Ghost and the Ghost Logo are trademarks of Ghost Foundation Ltd. Please see our [trademark policy](https://ghost.org/trademark/) for info on acceptable usage.
+## Documentation:
+
+- [ ] Detailed documentation is provided for the implemented architecture, including infrastructure setup, security configurations, monitoring, and disaster recovery procedures. The documentation is comprehensive and accessible to all relevant stakeholders.
