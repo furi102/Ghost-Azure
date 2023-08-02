@@ -99,3 +99,15 @@
 ## Documentation:
 
 - [ ] Detailed documentation is provided for the implemented architecture, including infrastructure setup, security configurations, monitoring, and disaster recovery procedures. The documentation is comprehensive and accessible to all relevant stakeholders.
+- [ ] 
+
+# Alternatively Azure Kubernetes service (aks) 
+
+## Scalability
+The application can also be deployed in Azure Kubernetes Service (AKS)  to automatically scale the number of containers based on traffic, as per the Horizontal Pod Autoscaler (HPA) configuration. 
+In this scenario, an Azure Container Repository (acr) can provide an image to deploy an application to aks in multiple Azure regions for geographic redundancy and fault tolerance.
+
+![image](https://github.com/furi102/Ghost-Azure/assets/62565315/b54cda3c-2569-4c1a-b1cf-2862cd0bf2a1)
+
+
+
