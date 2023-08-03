@@ -1,14 +1,12 @@
 name: armTemplateDeployment
-
 on:
   push:
     branches:
       - main
-
   workflow_dispatch:
 
 env:
-  subscriptionId: 33665a07-097d-48db-b1f9-dc30012e19d6
+  SUB_ID: ${{ secrets.SUBSCRIPTIONID}}
   AZURE_WEBAPP_NAME: "furi102-stg"   # Replace this with your Azure App Service name
   AZURE_WEBAPP_PACKAGE_PATH: '.'   # Replace this with the path to your Node.js app files, if it's not at the root of the repository
 
@@ -22,20 +20,17 @@ jobs:
       hostingPlanName: furi102-str-plan
     environment:
       name: staging
-
     steps:
       - uses: actions/checkout@v2
-
       - name: Azure Login
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-
       - name: Deploy Resource Group ${{ env.resource_group_name }}
         uses: Azure/arm-deploy@v1
         with:
           scope: subscription
-          subscriptionId: ${{ env.subscriptionId }}
+          subscriptionId: ${{ env.SUB_ID }}
           region: "${{ env.location }}"
           template: ./arm-templates/resourcegroup.json
           parameters:
@@ -43,15 +38,13 @@ jobs:
             resourceGroupName=${{ env.resource_group_name }}
           deploymentName: ${{ env.resource_group_name }}
           
-
       - name: Deploy azure App service
         uses: azure/arm-deploy@v1
         with:
-          subscriptionId: ${{ env.subscriptionId }}
+          subscriptionId: ${{ env.SUB_ID }}
           resourceGroupName: ${{ env.resource_group_name }}
           template: ./arm-templates/stg-azuredeploy.json
           deploymentMode: complete
-
   armDeploy:
     name: Deploy to Production
     runs-on: ubuntu-latest
@@ -61,22 +54,18 @@ jobs:
       hostingPlanName: furi102-prd-plan
     environment:
       name: prod
-
     needs: armDeployStaging
-
     steps:
       - uses: actions/checkout@v2
-
       - name: Azure Login
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-
       - name: Deploy Resource Group ${{ env.resource_group_name }}
         uses: Azure/arm-deploy@v1
         with:
           scope: subscription
-          subscriptionId: ${{ env.subscriptionId }}
+          subscriptionId: ${{ env.SUB_ID}}
           region: "${{ env.location }}"
           template: ./arm-templates/resourcegroup.json
           parameters:
@@ -84,13 +73,10 @@ jobs:
             resourceGroupName=${{ env.resource_group_name }}
           deploymentName: ${{ env.resource_group_name }}
           
-
       - name: Deploy azure App service
         uses: azure/arm-deploy@v1
         with:
-          subscriptionId: ${{ env.subscriptionId }}
+          subscriptionId: ${{ env.SUB_ID }}
           resourceGroupName: ${{ env.resource_group_name }}
           template: ./arm-templates/prd-azuredeploy.json
           deploymentMode: complete
-
-
